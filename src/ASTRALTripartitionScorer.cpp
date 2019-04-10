@@ -17,9 +17,9 @@ void  ASTRALTripartitionScorer::setup(Config& conf, vector<Clade>& clades)
   
   while(getline(file, tree)) {
     vector<Taxon> thistree;
-    newick_to_postorder(tree, ts, thistree);       
+    newick_to_postorder(tree, ts(), thistree);       
     postorders.push_back(thistree);
-    gttaxa.push_back(newick_to_taxa(tree,ts));
+    gttaxa.push_back(newick_to_taxa(tree,ts()));
 
   }
 
@@ -63,9 +63,9 @@ double ASTRALTripartitionScorer::score(const Tripartition& t) {
 	  double y=  c1[1] + c2[1];
 	  double z=  c1[2] + c2[2];
 	  
-	  if (gttaxa[ix].size() < ts.size())  {
+	  if (gttaxa[ix].size() < ts().size())  {
 	    
-	    array<double, 3> c3 = {t.a1.taxa.overlap_size(gttaxa[ix].taxa) - x, t.a2.taxa.overlap_size(gttaxa[ix].taxa) - y, t.rest.taxa.overlap_size(gttaxa[ix].taxa) - z};
+	    array<double, 3> c3 = {t.a1.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - x, t.a2.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - y, t.rest.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - z};
 	    val += qi(c1, c2, c3);
 	  }
 	  else {
@@ -94,7 +94,7 @@ double ASTRALTripartitionScorer::score(const Tripartition& t) {
 	    z += children[i][2];
 	  }
 	
-	  array<double, 3> c3 = {t.a1.taxa.overlap_size(gttaxa[ix].taxa) - x, t.a2.taxa.overlap_size(gttaxa[ix].taxa) - y, t.rest.taxa.overlap_size(gttaxa[ix].taxa) - z};
+	  array<double, 3> c3 = {t.a1.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - x, t.a2.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - y, t.rest.get_taxa().overlap_size(gttaxa[ix].get_taxa()) - z};
 
 	  children.push_back(c3);
 
