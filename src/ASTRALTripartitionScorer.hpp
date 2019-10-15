@@ -15,7 +15,6 @@ private:
   vector<vector<Taxon>> postorders;
   vector<Clade> gttaxa;
   string treefile;
-  QuartetDict* qd;
 };
 
 

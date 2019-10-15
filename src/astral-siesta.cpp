@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
   bool getMajority=true;
   bool getStrict=true;
   bool getAll=false;
-  bool getCount=false;  
+  bool getCount=true;  
   
   vector<string> output_labels;
   int path_length = wai_getExecutablePath(NULL, 0, NULL);
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
   cout << astralpath << endl;
 
   Logger::disable("DEBUG");
-
+  Logger::enable("PROGRESS");
   Config conf;  
   
   for(int i = 1; i < argc; i++) {
@@ -147,10 +147,8 @@ int main(int argc, char** argv) {
 
   conf.taxon_extractor = new DefaultTaxonSetExtractor(input);
 
-  if (extra != "")
-    conf.extractors.push_back(new ASTRALCladeExtractor(astralpath, input, extra));
-  else
-    conf.extractors.push_back(new ASTRALCladeExtractor(astralpath, input));
+
+  conf.extractors.push_back(new ASTRALCladeExtractor(input, extra, false, false));
   
   vector<string> trees = wASTRAL(conf);
 
