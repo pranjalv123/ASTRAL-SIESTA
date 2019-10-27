@@ -113,9 +113,9 @@ double ASTRALTripartitionScorer::score(const Tripartition& t) {
     }
   }
   
-  return val;
+  return -val;
 }
 
 double ASTRALTripartitionScorer::adjust_final_score(double score) {
-  return score/2;
+  return -score/2;
 }
